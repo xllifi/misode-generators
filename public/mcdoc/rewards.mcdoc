@@ -1,0 +1,121 @@
+use ::java::world::item::ItemStack
+use ::java::util::text::Text
+
+type DayString = #[match_regex="^\\d{4}-\\d{2}-\\d{2}@UTC[-+]\\d{2}$"] string
+
+// region Shared
+struct Condition {
+	type: ConditionType,
+	...rewards:condition[[type]],
+}
+
+enum(string) ConditionType {
+	Stat = "stat",
+	TimeUnix = "time_unix",
+	TimeDays = "time_days",
+	All = "all",
+	Any = "any",
+	Some = "some",
+}
+
+dispatch rewards:condition["stat"] to struct StatCondition {
+	stat_type: (
+		"block_mined" |
+		"item_crafted" |
+		"item_used" |
+		"item_broken" |
+		"item_picked_up" |
+		"item_dropped" |
+		"entity_killed" |
+		"entity_killed_by" |
+		"custom" |
+	),
+	stat: #[id] string,
+	threshold: int,
+}
+
+dispatch rewards:condition["time_unix"] to struct TimeUnixCondition {
+	unlocked_at: long,
+	expired_at?: long,
+}
+
+dispatch rewards:condition["time_days"] to struct TimeDaysCondition {
+	/// Example: 2025-12-01@UTC+03
+	unlocked_at: DayString,
+	/// Example: 2026-01-01@UTC+03
+	expired_at?: DayString,
+}
+
+dispatch rewards:condition["all"] to struct {
+	conditions: [Condition]
+}
+dispatch rewards:condition["any"] to struct {
+	conditions: [Condition]
+}
+dispatch rewards:condition["some"] to struct {
+	conditions: [Condition],
+	/// This condition is true if (completed conditions) > (threshold)
+	threshold: int
+}
+
+struct Reward {
+	type: RewardType,
+	...rewards:reward[[type]],
+}
+
+enum(string) RewardType {
+	Item = "item",
+	Xp = "xp",
+}
+
+dispatch rewards:reward["item"] to struct ItemReward {
+	item_stack: ItemStack,
+}
+
+dispatch rewards:reward["xp"] to struct XpReward {
+	amount: int,
+	xp_unit: ("points" | "levels"),
+}
+
+// endregion Shared
+// region Calendar
+dispatch minecraft:resource[rewards:calendar] to struct Calendar {
+	id: string,
+	/// Supports MiniMessage
+	title: string,
+	/// Example: 2025-12-01@UTC+03
+	start_day: DayString,
+	/// Example: 2026-01-01@UTC+03
+	end_day: DayString,
+	cells: [Cell] @ 1..35,
+}
+
+dispatch minecraft:resource[rewards:cell] to struct Cell {
+	id: string,
+	/// Supports MiniMessage
+	title: string,
+	/// Supports MiniMessage
+	description: [string],
+	display_item: ItemStack,
+	unlock_condition: Condition,
+	rewards: [Reward] @ 1..,
+}
+
+// endregion Calendar
+dispatch minecraft:resource[rewards:progression] to struct Progression {
+	id: string,
+	/// Supports MiniMessage
+	title: string,
+	tiers: [Tier] @ 1..,
+}
+
+dispatch minecraft:resource[rewards:tier] to struct Tier {
+	id: string,
+	/// Supports MiniMessage
+	title: string,
+	/// Supports MiniMessage
+	description: [string],
+	display_item: ItemStack,
+	unlock_condition: Condition,
+	rewards: [Reward] @ 1..,
+}

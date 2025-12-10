@@ -1,6 +1,6 @@
 import { useMemo } from 'preact/hooks'
 import supporters from '../../supporters.json'
-import { Card, ChangelogEntry, Footer, GeneratorCard, Giscus, ToolCard, ToolGroup } from '../components/index.js'
+import { Card, ChangelogEntry, Footer, GeneratorCard, ToolCard, ToolGroup } from '../components/index.js'
 import { WhatsNewTime } from '../components/whatsnew/WhatsNewTime.jsx'
 import { useLocale, useTitle } from '../contexts/index.js'
 import { useAsync } from '../hooks/useAsync.js'
@@ -18,33 +18,12 @@ export function Home({}: Props) {
 	const { locale } = useLocale()
 	useTitle(locale('title.home'))
 
-	const smallScreen = useMediaQuery('(max-width: 580px)')
-
 	return <main>
 		<div class="legacy-container">
 			<div class="card-group">
-				{smallScreen ? /* mobile */ <>
-					<PopularGenerators />
-					<FavoriteGenerators />
-					<WhatsNew />
-					<Changelog />
-					<Versions />
-					<Tools />
-				</> : /* desktop */ <>
-					<div class="card-column">
-						<PopularGenerators />
-						<Changelog />
-						<Versions />
-					</div>
-					{!smallScreen && <div class="card-column">
-						<FavoriteGenerators />
-						<WhatsNew />
-						<Tools />
-					</div>}
-				</>}
+				<PopularGenerators />
+				<FavoriteGenerators />
 			</div>
-			<Contributors />
-			<Giscus />
 			<Footer />
 		</div>
 	</main>
@@ -52,13 +31,8 @@ export function Home({}: Props) {
 
 function PopularGenerators() {
 	const { locale } = useLocale()
-	return <ToolGroup title={locale('generators.popular')} link="/generators/">
-		<GeneratorCard minimal id="loot_table" />
-		<GeneratorCard minimal id="advancement" />
-		<GeneratorCard minimal id="recipe" />
-		<ToolCard title={locale('worldgen')} link="/worldgen/" titleIcon="worldgen" />
-		<ToolCard title={locale('generators.all')} link="/generators/" titleIcon="arrow_right" />
-		<ToolCard title={locale('generators.partners')} link="/partners/" titleIcon="arrow_right" />
+	return <ToolGroup title={locale('generators.recommended')} link="/generators/">
+		<ToolCard title={locale('generator.rewards:calendar')} link="/rewards/calendar" titleIcon="arrow_right" />
 	</ToolGroup>
 }
 
