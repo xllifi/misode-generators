@@ -16,6 +16,7 @@ enum(string) ConditionType {
 	All = "all",
 	Any = "any",
 	Some = "some",
+	None = "none",
 }
 
 dispatch rewards:condition["stat"] to struct StatCondition {
@@ -55,7 +56,10 @@ dispatch rewards:condition["any"] to struct {
 dispatch rewards:condition["some"] to struct {
 	conditions: [Condition],
 	/// This condition is true if (completed conditions) > (threshold)
-	threshold: int
+	threshold: int,
+}
+dispatch rewards:condition["none"] to struct {
+	is_met: boolean,
 }
 
 struct Reward {
