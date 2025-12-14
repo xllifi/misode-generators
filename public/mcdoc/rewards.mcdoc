@@ -55,7 +55,7 @@ dispatch rewards:condition["any"] to struct {
 }
 dispatch rewards:condition["some"] to struct {
 	conditions: [Condition],
-	/// This condition is true if (completed conditions) > (threshold)
+	/// This condition is true if (completed conditions) >= (threshold)
 	threshold: int,
 }
 dispatch rewards:condition["none"] to struct {
