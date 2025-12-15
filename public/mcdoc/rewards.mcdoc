@@ -101,7 +101,6 @@ dispatch minecraft:resource[rewards:cell] to struct Cell {
 	/// Supports MiniMessage
 	description: [string],
 	display_item: ItemStack,
-	unlock_condition: Condition,
 	rewards: [Reward] @ 1..,
 }
 
