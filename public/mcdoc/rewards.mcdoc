@@ -101,6 +101,7 @@ dispatch minecraft:resource[rewards:cell] to struct Cell {
 	/// Supports MiniMessage
 	description: [string],
 	display_item: ItemStack,
+	collection_sound: #[id="sound_event"] string,
 	rewards: [Reward] @ 1..,
 }
 
