@@ -90,6 +90,7 @@ dispatch minecraft:resource[rewards:calendar] to struct Calendar {
 	/// Example: 2025-12-01@UTC+03
 	start_day: DayString,
 	/// Example: 2026-01-01@UTC+03
+	/// Calendar ends on the start of this day, so you probably want to add an extra day
 	end_day: DayString,
 	cells: [Cell] @ 1..35,
 }
@@ -101,7 +102,7 @@ dispatch minecraft:resource[rewards:cell] to struct Cell {
 	/// Supports MiniMessage
 	description: [string],
 	display_item: ItemStack,
-	collection_sound: #[id="sound_event"] string,
+	collection_sound?: #[id="sound_event"] string,
 	rewards: [Reward] @ 1..,
 }
 
