@@ -1,7 +1,7 @@
 use ::java::world::item::ItemStack
 use ::java::util::text::Text
 
-type DayString = #[match_regex="^\\d{4}-\\d{2}-\\d{2}@UTC[-+]\\d{2}$"] string
+type DayString = #[match_regex="^\\d{4}-\\d{2}-\\d{2}$"] string
 
 // region Shared
 struct Condition {
@@ -41,9 +41,9 @@ dispatch rewards:condition["time_unix"] to struct TimeUnixCondition {
 }
 
 dispatch rewards:condition["time_days"] to struct TimeDaysCondition {
-	/// Example: 2025-12-01@UTC+03
+	/// Example: 2025-12-01
 	unlocked_at: DayString,
-	/// Example: 2026-01-01@UTC+03
+	/// Example: 2026-01-01
 	expired_at?: DayString,
 }
 
@@ -87,9 +87,9 @@ dispatch minecraft:resource[rewards:calendar] to struct Calendar {
 	id: string,
 	/// Supports MiniMessage
 	title: string,
-	/// Example: 2025-12-01@UTC+03
+	/// Example: 2025-12-01
 	start_day: DayString,
-	/// Example: 2026-01-01@UTC+03
+	/// Example: 2026-01-01
 	/// Calendar ends on the start of this day, so you probably want to add an extra day
 	end_day: DayString,
 	cells: [Cell] @ 1..35,
