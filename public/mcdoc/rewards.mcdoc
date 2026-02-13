@@ -112,11 +112,11 @@ dispatch minecraft:resource[rewards:progression] to struct Progression {
 }
 
 dispatch minecraft:resource[rewards:tier] to struct Tier {
-	id: string,
 	/// Supports MiniMessage
 	title: string,
 	/// Supports MiniMessage
 	description: [string],
+	collection_sound?: #[id="sound_event"] string,
 	display_item: ItemStack,
 	unlock_condition: Condition,
 	rewards: [Reward] @ 1..,
