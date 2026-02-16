@@ -70,6 +70,7 @@ struct Reward {
 enum(string) RewardType {
 	Item = "item",
 	Xp = "xp",
+	LockerItem = "locker_item",
 }
 
 dispatch rewards:reward["item"] to struct ItemReward {
@@ -79,6 +80,29 @@ dispatch rewards:reward["item"] to struct ItemReward {
 dispatch rewards:reward["xp"] to struct XpReward {
 	amount: int,
 	xp_unit: ("points" | "levels"),
+}
+
+dispatch rewards:reward["locker_item"] to struct LockerItemReward {
+	locker_item: LockerItem
+}
+
+struct LockerItem {
+	type: LockerItemType,
+	...rewards:locker_item[[type]]
+}
+
+enum(string) LockerItemType {
+	Suffix = "suffix",
+	Prefix = "prefix",
+}
+
+dispatch rewards:locker_item["suffix"] to AffixLockerItem
+
+dispatch rewards:locker_item["prefix"] to AffixLockerItem
+
+struct AffixLockerItem {
+	/// Supports MiniMessage
+	component: string
 }
 
 // endregion Shared
@@ -108,6 +132,7 @@ dispatch minecraft:resource[rewards:progression] to struct Progression {
 	id: string,
 	/// Supports MiniMessage
 	title: string,
+	display_item: ItemStack,
 	tiers: [Tier] @ 1..,
 }
 

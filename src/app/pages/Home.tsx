@@ -28,6 +28,7 @@ function PopularGenerators() {
 	const { locale } = useLocale()
 	return <ToolGroup title={locale('generators.recommended')} link="/generators/">
 		<ToolCard title={locale('generator.rewards:calendar')} link="/rewards/calendar" titleIcon="arrow_right" />
+		<ToolCard title={locale('generator.rewards:progression')} link="/rewards/progression" titleIcon="arrow_right" />
 	</ToolGroup>
 }
 
