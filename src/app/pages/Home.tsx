@@ -29,6 +29,7 @@ function PopularGenerators() {
 	return <ToolGroup title={locale('generators.recommended')} link="/generators/">
 		<ToolCard title={locale('generator.rewards:calendar')} link="/rewards/calendar" titleIcon="arrow_right" />
 		<ToolCard title={locale('generator.rewards:progression')} link="/rewards/progression" titleIcon="arrow_right" />
+		<ToolCard title={locale('generator.rewards:cosmetic')} link="/rewards/cosmetic" titleIcon="arrow_right" />
 	</ToolGroup>
 }
 

@@ -70,7 +70,7 @@ struct Reward {
 enum(string) RewardType {
 	Item = "item",
 	Xp = "xp",
-	LockerItem = "locker_item",
+	Cosmetic = "cosmetic",
 }
 
 dispatch rewards:reward["item"] to struct ItemReward {
@@ -82,27 +82,14 @@ dispatch rewards:reward["xp"] to struct XpReward {
 	xp_unit: ("points" | "levels"),
 }
 
-dispatch rewards:reward["locker_item"] to struct LockerItemReward {
-	locker_item: LockerItem
+dispatch rewards:reward["cosmetic"] to struct CosmeticReward {
+	kind: CosmeticKind,
+	id: string,
 }
 
-struct LockerItem {
-	type: LockerItemType,
-	...rewards:locker_item[[type]]
-}
-
-enum(string) LockerItemType {
+enum(string) CosmeticKind {
 	Suffix = "suffix",
 	Prefix = "prefix",
-}
-
-dispatch rewards:locker_item["suffix"] to AffixLockerItem
-
-dispatch rewards:locker_item["prefix"] to AffixLockerItem
-
-struct AffixLockerItem {
-	/// Supports MiniMessage
-	component: string
 }
 
 // endregion Shared
@@ -129,6 +116,7 @@ dispatch minecraft:resource[rewards:cell] to struct Cell {
 }
 
 // endregion Calendar
+// region Progression
 dispatch minecraft:resource[rewards:progression] to struct Progression {
 	id: string,
 	/// Supports MiniMessage
@@ -146,4 +134,13 @@ dispatch minecraft:resource[rewards:tier] to struct Tier {
 	display_item: ItemStack,
 	unlock_condition: Condition,
 	rewards: [Reward] @ 1..,
+}
+// endregion Progression
+// region Cosmetic
+dispatch minecraft:resource[rewards:cosmetic] to struct Cosmetic {
+    type: CosmeticKind,
+    id: string,
+	/// Supports MiniMessage
+    component: string,
+    should_count_in_total: boolean,
 }

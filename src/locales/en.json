@@ -63,7 +63,7 @@
   "generate_new_uuid": "Generate new UUID",
   "generator.rewards:calendar": "Advent Calendar",
   "generator.rewards:progression": "Progression",
-  "generator.itemstack:itemstack": "Item stack",
+  "generator.rewards:cosmetic": "Cosmetic",
   "generators.all": "All generators",
   "generators.no_results": "No generators for this query",
   "generators.partners": "Modded Generators",

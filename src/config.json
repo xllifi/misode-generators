@@ -217,21 +217,21 @@
       "url": "rewards/calendar",
       "path": "rewards/calendar",
       "dependency": "rewards",
-      "minVersion": "1.21.10"
+      "minVersion": "1.21.11"
     },
     {
       "id": "rewards:progression",
       "url": "rewards/progression",
       "path": "rewards/progression",
       "dependency": "rewards",
-      "minVersion": "1.21.10"
+      "minVersion": "1.21.11"
     },
     {
-      "id": "itemstack:itemstack",
-      "url": "itemstack",
-      "path": "itemstack",
-      "dependency": "itemstack",
-      "minVersion": "1.21.10"
+      "id": "rewards:cosmetic",
+      "url": "rewards/cosmetic",
+      "path": "rewards/cosmetic",
+      "dependency": "rewards",
+      "minVersion": "1.21.11"
     }
   ],
   "legacyGuides": []
